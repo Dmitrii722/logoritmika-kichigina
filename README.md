@@ -1,2 +1,0 @@
-# logoritmika-kichigina
-logoritmika
