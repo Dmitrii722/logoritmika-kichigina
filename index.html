@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Логоритмика: ритм, речь, движение — Диагностический опросник</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --parchment: #F5F0E6;
+            --parchment-dark: #EBE5D8;
+            --ink: #1A1A1A;
+            --ink-light: #3A3A3A;
+            --bronze: #8B7355;
+            --bronze-light: #A68B6A;
+            --bronze-dark: #6B5B4F;
+            --stone: #7A7067;
+            --ivory: #FAF8F3;
+            --accent-warm: #C4A882;
+            --shadow: rgba(107, 91, 79, 0.15);
+            --shadow-deep: rgba(107, 91, 79, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'PT Serif', Georgia, serif;
+            background: var(--parchment);
+            color: var(--ink);
+            line-height: 1.7;
+            font-size: 15px;
+            overflow-x: hidden;
+        }
+
+        /* Paper texture overlay — only on screen */
+        @media screen {
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+                pointer-events: none;
+                z-index: 9999;
+                opacity: 0.6;
+            }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--parchment-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--bronze); border-radius: 4px; }
+
+        /* ===== HERO — screen only ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--parchment) 0%, var(--parchment-dark) 50%, #E8E0D0 100%);
+            overflow: hidden;
+            border-bottom: 3px solid var(--bronze);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -10%;
+            width: 120%;
+            height: 100px;
+            background: var(--parchment);
+            transform: rotate(-2deg);
+            z-index: 2;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.08;
+            color: var(--bronze-dark);
+            font-family: 'Playfair Display', serif;
+            pointer-events: none;
+            animation: float 8s ease-in-out infinite;
+        }
+        .floating-element:nth-child(1) { top: 10%; left: 5%; font-size: 120px; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 20%; right: 8%; font-size: 80px; animation-delay: 2s; }
+        .floating-element:nth-child(3) { bottom: 25%; left: 12%; font-size: 100px; animation-delay: 4s; }
+        .floating-element:nth-child(4) { bottom: 15%; right: 15%; font-size: 90px; animation-delay: 1s; }
+        .floating-element:nth-child(5) { top: 50%; left: 50%; font-size: 60px; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(2deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 900px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            border: 2px solid var(--bronze);
+            padding: 8px 24px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--bronze);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .hero-badge::before, .hero-badge::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 8px;
+            color: var(--bronze);
+        }
+        .hero-badge::before { left: 8px; }
+        .hero-badge::after { right: 8px; }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        .hero h1 em { font-style: italic; font-weight: 400; color: var(--bronze-dark); }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-style: italic;
+            color: var(--stone);
+            margin-bottom: 15px;
+        }
+        .hero-author {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--bronze);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .hero-age {
+            margin-top: 30px;
+            padding: 15px 30px;
+            border: 1px solid var(--accent-warm);
+            display: inline-block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: var(--bronze-dark);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        .scroll-indicator svg { width: 30px; height: 30px; stroke: var(--bronze); fill: none; stroke-width: 2; }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 30px;
+            position: relative;
+        }
+
+        /* Marginalia — fixed positioning, never overlaps */
+        .marginalia {
+            position: absolute;
+            right: -160px;
+            top: 120px;
+            width: 140px;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 13px;
+            color: var(--bronze);
+            line-height: 1.5;
+            opacity: 0.7;
+            border-left: 1px solid var(--accent-warm);
+            padding-left: 15px;
+            z-index: 1;
+        }
+        @media (max-width: 1400px) { .marginalia { display: none; } }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            margin-bottom: 60px;
+            position: relative;
+            page-break-inside: avoid;
+        }
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--bronze);
+        }
+        .section-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--bronze);
+            line-height: 1;
+            opacity: 0.3;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--ink);
+            flex: 1;
+        }
+        .section-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--stone);
+        }
+
+        /* ===== INFO CARD ===== */
+        .info-card {
+            background: var(--ivory);
+            border: 1px solid var(--accent-warm);
+            padding: 35px;
+            margin-bottom: 40px;
+            position: relative;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 1px solid var(--accent-warm);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+        .info-field { position: relative; }
+        .info-field label {
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--bronze);
+            margin-bottom: 8px;
+        }
+        .info-field input {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid var(--bronze);
+            background: transparent;
+            padding: 8px 0;
+            font-family: 'PT Serif', serif;
+            font-size: 1.1rem;
+            color: var(--ink);
+            outline: none;
+        }
+        .info-field input:focus { border-bottom-color: var(--bronze-dark); }
+
+        /* ===== DIAGNOSTIC TABLES ===== */
+        .diagnostic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: var(--ivory);
+            box-shadow: 0 2px 15px var(--shadow);
+        }
+        .diagnostic-table thead {
+            background: linear-gradient(to bottom, var(--bronze-dark), var(--bronze));
+            color: var(--ivory);
+        }
+        .diagnostic-table th {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 16px 12px;
+            text-align: left;
+        }
+        .diagnostic-table th:first-child { width: 40%; }
+        .diagnostic-table th.score-header {
+            text-align: center;
+            width: 18%;
+        }
+        .diagnostic-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--parchment-dark);
+            vertical-align: middle;
+        }
+        .diagnostic-table tbody tr { transition: background 0.2s; }
+        .diagnostic-table tbody tr:hover { background: rgba(196, 168, 130, 0.08); }
+        .diagnostic-table tbody tr:last-child td { border-bottom: 2px solid var(--bronze); }
+
+        .skill-name { font-weight: 700; color: var(--ink); font-size: 0.95rem; }
+        .skill-desc { font-size: 0.85rem; color: var(--stone); font-style: italic; margin-top: 2px; }
+
+        /* Radio buttons */
+        .radio-cell { text-align: center; }
+        .radio-custom {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .radio-custom input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--bronze);
+            border-radius: 50%;
+            background: var(--ivory);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .radio-custom input[type="radio"]:checked {
+            background: var(--bronze);
+            border-color: var(--bronze-dark);
+            transform: scale(1.1);
+        }
+        .radio-custom input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px; height: 10px;
+            background: var(--ivory);
+            border-radius: 50%;
+        }
+        .radio-custom .score-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.75rem;
+            color: var(--stone);
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Section score indicator */
+        .section-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(to right, var(--parchment-dark), var(--ivory));
+            border-left: 4px solid var(--bronze);
+            margin-bottom: 30px;
+        }
+        .section-score-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: var(--bronze-dark);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .section-score-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--bronze);
+        }
+        .section-progress {
+            width: 200px;
+            height: 6px;
+            background: var(--parchment-dark);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        .section-progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--bronze), var(--bronze-light));
+            border-radius: 3px;
+            transition: width 0.6s ease-out;
+        }
+
+        /* ===== DASHBOARD — screen only ===== */
+        .dashboard {
+            background: var(--ivory);
+            border: 2px solid var(--bronze);
+            padding: 40px;
+            margin: 50px 0;
+            position: relative;
+            box-shadow: 0 8px 40px var(--shadow-deep);
+        }
+        .dashboard::before {
+            content: '';
+            position: absolute;
+            top: 12px; left: 12px; right: 12px; bottom: 12px;
+            border: 1px solid var(--accent-warm);
+            pointer-events: none;
+        }
+        .dashboard-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--ink);
+        }
+        .dashboard-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            text-align: center;
+            color: var(--stone);
+            margin-bottom: 35px;
+            font-size: 1.1rem;
+        }
+        .total-score-display {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--parchment-dark), var(--ivory));
+            border: 1px solid var(--accent-warm);
+        }
+        .total-score-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--bronze);
+            line-height: 1;
+        }
+        .total-score-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--stone);
+            margin-top: 10px;
+        }
+        .total-interpretation {
+            font-family: 'PT Serif', serif;
+            font-size: 1.1rem;
+            color: var(--ink-light);
+            margin-top: 15px;
+            font-style: italic;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-card {
+            text-align: center;
+            padding: 20px;
+            background: var(--parchment);
+            border: 1px solid var(--accent-warm);
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .chart-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+        .radial-chart {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 15px;
+        }
+        .radial-chart svg { transform: rotate(-90deg); }
+        .radial-chart-bg { fill: none; stroke: var(--parchment-dark); stroke-width: 8; }
+        .radial-chart-fill {
+            fill: none;
+            stroke: var(--bronze);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease-out;
+        }
+        .radial-chart-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--bronze);
+        }
+        .chart-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            color: var(--ink);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        .chart-score {
+            font-family: 'PT Serif', serif;
+            font-size: 0.85rem;
+            color: var(--stone);
+            margin-top: 5px;
+        }
+        .scale-reference {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid var(--accent-warm);
+            flex-wrap: wrap;
+        }
+        .scale-item { display: flex; align-items: center; gap: 10px; }
+        .scale-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid var(--bronze);
+        }
+        .scale-dot.filled { background: var(--bronze); }
+        .scale-text {
+            font-family: 'PT Serif', serif;
+            font-size: 0.9rem;
+            color: var(--ink-light);
+        }
+
+        /* ===== COMMENTS & CONCLUSION ===== */
+        .comments-area {
+            width: 100%;
+            min-height: 100px;
+            border: 1px solid var(--accent-warm);
+            background: var(--ivory);
+            padding: 15px;
+            font-family: 'PT Serif', serif;
+            font-size: 1rem;
+            color: var(--ink);
+            line-height: 1.7;
+            resize: vertical;
+            outline: none;
+            margin-top: 10px;
+        }
+        .comments-area:focus {
+            border-color: var(--bronze);
+            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+        }
+        .conclusion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .conclusion-card {
+            background: var(--ivory);
+            border: 1px solid var(--accent-warm);
+            padding: 25px;
+            position: relative;
+        }
+        .conclusion-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--bronze);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--accent-warm);
+        }
+
+        /* ===== RECOMMENDATIONS ===== */
+        .recommendations-list { list-style: none; padding: 0; }
+        .recommendations-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--parchment-dark);
+        }
+        .recommendations-list li:last-child { border-bottom: none; }
+        .checkbox-custom {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--bronze);
+            background: var(--ivory);
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+            position: relative;
+            transition: all 0.2s;
+        }
+        .checkbox-custom:checked {
+            background: var(--bronze);
+            border-color: var(--bronze-dark);
+        }
+        .checkbox-custom:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--ivory);
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .recommendation-text {
+            font-family: 'PT Serif', serif;
+            font-size: 1rem;
+            color: var(--ink);
+        }
+
+        /* ===== PRINT BUTTON ===== */
+        .print-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to right, var(--ink), var(--ink-light));
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+        }
+        .btn {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 12px 30px;
+            border: 2px solid var(--bronze);
+            background: transparent;
+            color: var(--bronze);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn:hover { background: var(--bronze); color: var(--ivory); }
+        .btn-primary { background: var(--bronze); color: var(--ivory); }
+        .btn-primary:hover { background: var(--bronze-dark); border-color: var(--bronze-dark); }
+
+        /* ===== PRINT STYLES — ONLY SURVEY TABLES ===== */
+        @media print {
+            @page { size: A4; margin: 15mm; }
+
+            /* Hide everything except survey */
+            .hero,
+            .scroll-indicator,
+            .floating-element,
+            .print-bar,
+            .dashboard,
+            .conclusion-grid,
+            .recommendations-list,
+            .divider,
+            .goal-box,
+            .marginalia,
+            .section-subtitle,
+            .comments-area,
+            .section-progress,
+            .scale-reference,
+            .chart-card,
+            .total-score-display,
+            .total-interpretation,
+            .charts-grid,
+            .dashboard-title,
+            .dashboard-subtitle {
+                display: none !important;
+            }
+
+            /* Show only survey sections */
+            body {
+                background: white !important;
+                color: black !important;
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+            body::before { display: none !important; }
+
+            .main-container {
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+
+            /* Print header */
+            .print-header {
+                display: block !important;
+                text-align: center;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #333;
+            }
+            .print-header h1 {
+                font-family: 'Playfair Display', serif;
+                font-size: 18pt;
+                margin-bottom: 5px;
+            }
+            .print-header p {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 10pt;
+                color: #555;
+            }
+
+            /* Info card for print */
+            .info-card {
+                display: block !important;
+                background: white !important;
+                border: 1px solid #333 !important;
+                box-shadow: none !important;
+                padding: 15px !important;
+                margin-bottom: 15px !important;
+            }
+            .info-card::before { display: none !important; }
+            .info-grid {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+            }
+            .info-field input {
+                border-bottom: 1px solid #333 !important;
+                font-size: 11pt !important;
+            }
+            .info-field label {
+                font-size: 8pt !important;
+                color: #333 !important;
+            }
+
+            /* Section headers */
+            .section {
+                margin-bottom: 15px !important;
+                page-break-inside: avoid;
+            }
+            .section-header {
+                border-bottom: 1px solid #333 !important;
+                padding-bottom: 5px !important;
+                margin-bottom: 10px !important;
+            }
+            .section-number {
+                font-size: 20pt !important;
+                color: #666 !important;
+            }
+            .section-title {
+                font-size: 13pt !important;
+                color: black !important;
+            }
+
+            /* Tables */
+            .diagnostic-table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                font-size: 9pt !important;
+                box-shadow: none !important;
+                background: white !important;
+                margin-bottom: 10px !important;
+            }
+            .diagnostic-table thead {
+                background: #333 !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .diagnostic-table th {
+                padding: 6px 4px !important;
+                font-size: 8pt !important;
+                border: 1px solid #333 !important;
+            }
+            .diagnostic-table td {
+                padding: 6px 4px !important;
+                border: 1px solid #999 !important;
+                vertical-align: middle !important;
+            }
+            .diagnostic-table tbody tr:last-child td {
+                border-bottom: 1px solid #999 !important;
+            }
+
+            .skill-name { font-size: 9pt !important; font-weight: bold !important; }
+            .skill-desc { font-size: 8pt !important; color: #555 !important; }
+
+            /* Radio buttons in print */
+            .radio-cell { text-align: center !important; }
+            .radio-custom input[type="radio"] {
+                width: 14px !important;
+                height: 14px !important;
+                border: 1.5px solid #333 !important;
+                background: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .radio-custom input[type="radio"]:checked {
+                background: #333 !important;
+                border-color: #333 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .radio-custom input[type="radio"]:checked::after {
+                width: 6px !important;
+                height: 6px !important;
+                background: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .radio-custom .score-label {
+                font-size: 7pt !important;
+                color: #333 !important;
+            }
+
+            /* Section score for print */
+            .section-score {
+                display: flex !important;
+                background: white !important;
+                border: 1px solid #333 !important;
+                border-left: 3px solid #333 !important;
+                padding: 8px 12px !important;
+                margin-bottom: 10px !important;
+            }
+            .section-score-label {
+                font-size: 9pt !important;
+                color: #333 !important;
+            }
+            .section-score-value {
+                font-size: 12pt !important;
+                color: #333 !important;
+            }
+
+            /* Print footer */
+            .print-footer {
+                display: block !important;
+                text-align: center;
+                margin-top: 20px;
+                padding-top: 10px;
+                border-top: 1px solid #333;
+                font-size: 8pt;
+                color: #555;
+            }
+
+            /* Force show print-only elements */
+            .print-only { display: block !important; }
+        }
+
+        /* Screen: hide print-only elements */
+        @media screen {
+            .print-header,
+            .print-footer,
+            .print-only {
+                display: none !important;
+            }
+        }
+
+        /* ===== ANIMATIONS ON SCROLL ===== */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Decorative divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            color: var(--bronze);
+            opacity: 0.5;
+        }
+        .divider-line { width: 60px; height: 1px; background: var(--bronze); }
+        .divider-icon { font-size: 12px; }
+
+        /* Goal box */
+        .goal-box {
+            background: linear-gradient(135deg, var(--parchment-dark), var(--ivory));
+            border-left: 4px solid var(--bronze);
+            padding: 25px 30px;
+            margin: 30px 0;
+            font-family: 'PT Serif', serif;
+            font-style: italic;
+            color: var(--ink-light);
+            position: relative;
+        }
+        .goal-box strong {
+            font-style: normal;
+            color: var(--bronze-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        .goal-box ul { margin-top: 10px; margin-left: 20px; }
+        .goal-box li { margin-bottom: 5px; }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- ===== HERO / COVER (screen only) ===== -->
+    <section class="hero">
+        <div class="floating-element">♪</div>
+        <div class="floating-element">♫</div>
+        <div class="floating-element">✦</div>
+        <div class="floating-element">◈</div>
+        <div class="floating-element">✧</div>
+        <div class="hero-content">
+            <div class="hero-badge">Диагностическое издание</div>
+            <h1>Логоритмика:<br><em>ритм, речь, движение</em></h1>
+            <p class="hero-subtitle">Наблюдение за динамикой развития ребёнка через искусство логоритмики</p>
+            <p class="hero-author">Педагог: Ирина Сергеевна Кичигина</p>
+            <div class="hero-age">Возраст: 1,5 — 3 года</div>
+        </div>
+        <div class="scroll-indicator" onclick="document.getElementById('main').scrollIntoView({behavior: 'smooth'})">
+            <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></svg>
+        </div>
+    </section>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main id="main" class="main-container">
+
+        <!-- Marginalia — positioned away from content -->
+        <div class="marginalia">
+            «Ритм — это основа, на которой строится всё остальное: речь, движение, мышление.»
+        </div>
+
+        <!-- PRINT HEADER (visible only when printing) -->
+        <div class="print-header print-only">
+            <h1>Логоритмика: ритм, речь, движение</h1>
+            <p>Диагностический опросник для детей 1,5–3 лет | Педагог: Ирина Сергеевна Кичигина</p>
+        </div>
+
+        <!-- INFO CARD -->
+        <div class="info-card animate-on-scroll">
+            <div class="info-grid">
+                <div class="info-field">
+                    <label>ФИ ребёнка</label>
+                    <input type="text" id="childName" placeholder="____________________">
+                </div>
+                <div class="info-field">
+                    <label>Возраст</label>
+                    <input type="text" id="childAge" placeholder="____________________">
+                </div>
+                <div class="info-field">
+                    <label>Дата</label>
+                    <input type="text" id="date" placeholder="____________________">
+                </div>
+                <div class="info-field">
+                    <label>Педагог</label>
+                    <input type="text" id="pedagog" value="Ирина Сергеевна Кичигина">
+                </div>
+            </div>
+        </div>
+
+        <!-- GOAL -->
+        <div class="goal-box animate-on-scroll">
+            <strong>Цель диагностики:</strong> Оценить уровень развития предпосылок речи через логоритмические показатели:
+            <ul>
+                <li>слуховое внимание</li>
+                <li>чувство ритма</li>
+                <li>подражание</li>
+                <li>двигательная координация</li>
+                <li>понимание инструкции</li>
+                <li>речевая активность</li>
+                <li>эмоциональное включение в деятельность</li>
+            </ul>
+        </div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">◆</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- ===== SECTION 1: Эмоционально-коммуникативная сфера ===== -->
+        <section class="section animate-on-scroll" data-section="1">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <div>
+                    <h2 class="section-title">Эмоционально-коммуникативная сфера</h2>
+                    <p class="section-subtitle">Основа взаимодействия и готовности к занятиям</p>
+                </div>
+            </div>
+            <table class="diagnostic-table">
+                <thead>
+                    <tr>
+                        <th>Показатель</th>
+                        <th class="score-header">0 — не проявляется</th>
+                        <th class="score-header">1 — с помощью</th>
+                        <th class="score-header">2 — самостоятельно</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-skill="contact">
+                        <td>
+                            <div class="skill-name">Входит в контакт со взрослым</div>
+                            <div class="skill-desc">не вступает / кратковременно / охотно взаимодействует</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="contact" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="contact" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="contact" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="greeting">
+                        <td>
+                            <div class="skill-name">Реагирует на приветствие</div>
+                            <div class="skill-desc">нет / с подсказкой / самостоятельно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="greeting" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="greeting" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="greeting" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="attention">
+                        <td>
+                            <div class="skill-name">Удерживает внимание в группе</div>
+                            <div class="skill-desc">менее 1 мин / 2–5 мин / более 5 мин</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="attention" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="attention" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="attention" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="interest">
+                        <td>
+                            <div class="skill-name">Проявляет интерес к занятиям</div>
+                            <div class="skill-desc">нет / эпизодически / активно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="interest" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="interest" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="interest" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="section-score">
+                <span class="section-score-label">Баллы по сфере</span>
+                <div class="section-progress">
+                    <div class="section-progress-bar" id="progress-1" style="width: 0%"></div>
+                </div>
+                <span class="section-score-value" id="score-1">0 / 8</span>
+            </div>
+        </section>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">◆</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- ===== SECTION 2: Подражание ===== -->
+        <section class="section animate-on-scroll" data-section="2">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <div>
+                    <h2 class="section-title">Подражание</h2>
+                    <p class="section-subtitle">Ключевой показатель логоритмики</p>
+                </div>
+            </div>
+            <table class="diagnostic-table">
+                <thead>
+                    <tr>
+                        <th>Показатель</th>
+                        <th class="score-header">0 — не проявляется</th>
+                        <th class="score-header">1 — с помощью</th>
+                        <th class="score-header">2 — самостоятельно</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-skill="mimic_move">
+                        <td>
+                            <div class="skill-name">Повторяет движения за взрослым</div>
+                            <div class="skill-desc">не повторяет / частично / повторяет</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_move" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_move" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_move" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="mimic_gesture">
+                        <td>
+                            <div class="skill-name">Имитирует жесты</div>
+                            <div class="skill-desc">нет / с помощью / самостоятельно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_gesture" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_gesture" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_gesture" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="mimic_sound">
+                        <td>
+                            <div class="skill-name">Подражает звукоподражаниям</div>
+                            <div class="skill-desc">нет / отдельные попытки / активно повторяет</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_sound" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_sound" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_sound" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="mimic_peer">
+                        <td>
+                            <div class="skill-name">Копирует действия сверстников</div>
+                            <div class="skill-desc">нет / иногда / активно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_peer" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_peer" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="mimic_peer" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="background: var(--parchment); padding: 15px 20px; margin-bottom: 20px; border-left: 3px solid var(--bronze); font-style: italic; color: var(--stone);">
+                <strong>Примеры звукоподражаний:</strong> хлоп-хлоп / топ-топ / би-би / тук-тук / ам-ам
+            </div>
+            <div class="section-score">
+                <span class="section-score-label">Баллы по сфере</span>
+                <div class="section-progress">
+                    <div class="section-progress-bar" id="progress-2" style="width: 0%"></div>
+                </div>
+                <span class="section-score-value" id="score-2">0 / 8</span>
+            </div>
+        </section>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">◆</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- ===== SECTION 3: Слуховое внимание ===== -->
+        <section class="section animate-on-scroll" data-section="3">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <div>
+                    <h2 class="section-title">Слуховое внимание и восприятие</h2>
+                    <p class="section-subtitle">Фундамент речевого развития</p>
+                </div>
+            </div>
+            <table class="diagnostic-table">
+                <thead>
+                    <tr>
+                        <th>Показатель</th>
+                        <th class="score-header">0 — не проявляется</th>
+                        <th class="score-header">1 — с помощью</th>
+                        <th class="score-header">2 — самостоятельно</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-skill="hear_music">
+                        <td>
+                            <div class="skill-name">Реагирует на музыку</div>
+                            <div class="skill-desc">нет / кратковременно / активно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="hear_music" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="hear_music" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="hear_music" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="recognize_song">
+                        <td>
+                            <div class="skill-name">Узнаёт знакомую песню</div>
+                            <div class="skill-desc">нет / по подсказке / сразу реагирует</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="recognize_song" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="recognize_song" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="recognize_song" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="stop_signal">
+                        <td>
+                            <div class="skill-name">Останавливается по сигналу (стоп)</div>
+                            <div class="skill-desc">нет / с помощью / самостоятельно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="stop_signal" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="stop_signal" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="stop_signal" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="loud_quiet">
+                        <td>
+                            <div class="skill-name">Различает громко / тихо</div>
+                            <div class="skill-desc">нет / частично / уверенно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="loud_quiet" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="loud_quiet" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="loud_quiet" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="section-score">
+                <span class="section-score-label">Баллы по сфере</span>
+                <div class="section-progress">
+                    <div class="section-progress-bar" id="progress-3" style="width: 0%"></div>
+                </div>
+                <span class="section-score-value" id="score-3">0 / 8</span>
+            </div>
+        </section>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">◆</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- ===== SECTION 4: Чувство ритма ===== -->
+        <section class="section animate-on-scroll" data-section="4">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <div>
+                    <h2 class="section-title">Чувство ритма</h2>
+                    <p class="section-subtitle">Синхронизация движения и звука</p>
+                </div>
+            </div>
+            <table class="diagnostic-table">
+                <thead>
+                    <tr>
+                        <th>Показатель</th>
+                        <th class="score-header">0 — не проявляется</th>
+                        <th class="score-header">1 — с помощью</th>
+                        <th class="score-header">2 — самостоятельно</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-skill="clap_rhythm">
+                        <td>
+                            <div class="skill-name">Хлопает в ритм</div>
+                            <div class="skill-desc">нет / с помощью / самостоятельно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="clap_rhythm" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="clap_rhythm" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="clap_rhythm" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="stomp_rhythm">
+                        <td>
+                            <div class="skill-name">Топает в заданном ритме</div>
+                            <div class="skill-desc">нет / частично / уверенно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="stomp_rhythm" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="stomp_rhythm" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="stomp_rhythm" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="instrument_signal">
+                        <td>
+                            <div class="skill-name">Использует музыкальные инструменты по сигналу</div>
+                            <div class="skill-desc">нет / с помощью / самостоятельно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="instrument_signal" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="instrument_signal" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="instrument_signal" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="anticipate_rhythm">
+                        <td>
+                            <div class="skill-name">Предвосхищает знакомые ритмические действия</div>
+                            <div class="skill-desc">нет / иногда / регулярно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="anticipate_rhythm" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="anticipate_rhythm" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="anticipate_rhythm" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="section-score">
+                <span class="section-score-label">Баллы по сфере</span>
+                <div class="section-progress">
+                    <div class="section-progress-bar" id="progress-4" style="width: 0%"></div>
+                </div>
+                <span class="section-score-value" id="score-4">0 / 8</span>
+            </div>
+        </section>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">◆</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- ===== SECTION 5: Двигательная сфера ===== -->
+        <section class="section animate-on-scroll" data-section="5">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <div>
+                    <h2 class="section-title">Двигательная сфера</h2>
+                    <p class="section-subtitle">Общая и мелкая моторика</p>
+                </div>
+            </div>
+            <table class="diagnostic-table">
+                <thead>
+                    <tr>
+                        <th>Показатель</th>
+                        <th class="score-header">0 — не проявляется</th>
+                        <th class="score-header">1 — с помощью</th>
+                        <th class="score-header">2 — самостоятельно</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-skill="coordination">
+                        <td>
+                            <div class="skill-name">Координация движений</div>
+                            <div class="skill-desc">нарушена / нестабильна / соответствует возрасту</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="coordination" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="coordination" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="coordination" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="follow_instruction">
+                        <td>
+                            <div class="skill-name">Выполняет движения по инструкции</div>
+                            <div class="skill-desc">нет / частично / выполняет</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="follow_instruction" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="follow_instruction" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="follow_instruction" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="switch_movement">
+                        <td>
+                            <div class="skill-name">Переключается между движениями</div>
+                            <div class="skill-desc">сложно / с паузой / легко</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="switch_movement" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="switch_movement" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="switch_movement" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="use_objects">
+                        <td>
+                            <div class="skill-name">Использует предметы (ложки, бубен, ленты)</div>
+                            <div class="skill-desc">не может / с помощью / самостоятельно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="use_objects" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="use_objects" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="use_objects" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="section-score">
+                <span class="section-score-label">Баллы по сфере</span>
+                <div class="section-progress">
+                    <div class="section-progress-bar" id="progress-5" style="width: 0%"></div>
+                </div>
+                <span class="section-score-value" id="score-5">0 / 8</span>
+            </div>
+        </section>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">◆</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- ===== SECTION 6: Речевые предпосылки ===== -->
+        <section class="section animate-on-scroll" data-section="6">
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <div>
+                    <h2 class="section-title">Речевые предпосылки</h2>
+                    <p class="section-subtitle">Путь к осознанной речи</p>
+                </div>
+            </div>
+            <table class="diagnostic-table">
+                <thead>
+                    <tr>
+                        <th>Показатель</th>
+                        <th class="score-header">0 — не проявляется</th>
+                        <th class="score-header">1 — с помощью</th>
+                        <th class="score-header">2 — самостоятельно</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-skill="react_speech">
+                        <td>
+                            <div class="skill-name">Реагирует на обращённую речь</div>
+                            <div class="skill-desc">нет / частично / хорошо</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="react_speech" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="react_speech" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="react_speech" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="simple_instruction">
+                        <td>
+                            <div class="skill-name">Выполняет простую инструкцию</div>
+                            <div class="skill-desc">нет / с помощью / самостоятельно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="simple_instruction" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="simple_instruction" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="simple_instruction" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="sound_mimicry">
+                        <td>
+                            <div class="skill-name">Использует звукоподражания</div>
+                            <div class="skill-desc">нет / редко / активно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="sound_mimicry" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="sound_mimicry" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="sound_mimicry" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="words_in_songs">
+                        <td>
+                            <div class="skill-name">Использует слова / слоги в песенках</div>
+                            <div class="skill-desc">нет / отдельные / повторяет</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="words_in_songs" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="words_in_songs" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="words_in_songs" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="speech_initiative">
+                        <td>
+                            <div class="skill-name">Появляется речевая инициатива</div>
+                            <div class="skill-desc">нет / редко / регулярно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="speech_initiative" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="speech_initiative" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="speech_initiative" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="section-score">
+                <span class="section-score-label">Баллы по сфере</span>
+                <div class="section-progress">
+                    <div class="section-progress-bar" id="progress-6" style="width: 0%"></div>
+                </div>
+                <span class="section-score-value" id="score-6">0 / 10</span>
+            </div>
+        </section>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">◆</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- ===== SECTION 7: Предсказуемость ===== -->
+        <section class="section animate-on-scroll" data-section="7">
+            <div class="section-header">
+                <span class="section-number">07</span>
+                <div>
+                    <h2 class="section-title">Предсказуемость и включённость</h2>
+                    <p class="section-subtitle">Структура занятия как опора развития</p>
+                </div>
+            </div>
+            <table class="diagnostic-table">
+                <thead>
+                    <tr>
+                        <th>Показатель</th>
+                        <th class="score-header">0 — не проявляется</th>
+                        <th class="score-header">1 — с помощью</th>
+                        <th class="score-header">2 — самостоятельно</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-skill="know_rituals">
+                        <td>
+                            <div class="skill-name">Узнаёт ритуалы занятия</div>
+                            <div class="skill-desc">нет / частично / узнаёт</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="know_rituals" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="know_rituals" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="know_rituals" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="expect_actions">
+                        <td>
+                            <div class="skill-name">Ожидает знакомые действия</div>
+                            <div class="skill-desc">нет / иногда / регулярно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="expect_actions" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="expect_actions" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="expect_actions" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="initiate_game">
+                        <td>
+                            <div class="skill-name">Сам инициирует знакомую игру</div>
+                            <div class="skill-desc">нет / с подсказкой / самостоятельно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="initiate_game" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="initiate_game" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="initiate_game" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                    <tr data-skill="transition">
+                        <td>
+                            <div class="skill-name">Спокойно переходит между этапами занятия</div>
+                            <div class="skill-desc">нет / с поддержкой / самостоятельно</div>
+                        </td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="transition" value="0" onchange="updateScores()"><span class="score-label">0</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="transition" value="1" onchange="updateScores()"><span class="score-label">1</span></label></td>
+                        <td class="radio-cell"><label class="radio-custom"><input type="radio" name="transition" value="2" onchange="updateScores()"><span class="score-label">2</span></label></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="section-score">
+                <span class="section-score-label">Баллы по сфере</span>
+                <div class="section-progress">
+                    <div class="section-progress-bar" id="progress-7" style="width: 0%"></div>
+                </div>
+                <span class="section-score-value" id="score-7">0 / 8</span>
+            </div>
+        </section>
+
+        <!-- ===== DASHBOARD (screen only) ===== -->
+        <section class="dashboard animate-on-scroll" id="dashboard">
+            <h2 class="dashboard-title">Итоговый результат</h2>
+            <p class="dashboard-subtitle">Визуализация динамики развития ребёнка</p>
+            <div class="total-score-display">
+                <div class="total-score-number" id="totalScore">0</div>
+                <div class="total-score-label">Сумма баллов из 56</div>
+                <div class="total-interpretation" id="totalInterpretation">
+                    Заполните диагностические таблицы выше, чтобы получить интерпретацию результатов.
+                </div>
+            </div>
+            <div class="charts-grid" id="chartsGrid"></div>
+            <div class="scale-reference">
+                <div class="scale-item">
+                    <div class="scale-dot"></div>
+                    <span class="scale-text"><strong>0</strong> — навык отсутствует</span>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-dot filled"></div>
+                    <span class="scale-text"><strong>1</strong> — с помощью / нестабильно</span>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-dot filled" style="background: var(--bronze);"></div>
+                    <span class="scale-text"><strong>2</strong> — самостоятельно / устойчиво</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">◆</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- ===== QUALITATIVE CONCLUSION (screen only) ===== -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <span class="section-number" style="font-size: 2rem;">✦</span>
+                <div>
+                    <h2 class="section-title">Качественное заключение педагога</h2>
+                    <p class="section-subtitle">Индивидуальный портрет ребёнка</p>
+                </div>
+            </div>
+            <div class="conclusion-grid">
+                <div class="conclusion-card">
+                    <h4>Сильные стороны ребёнка</h4>
+                    <textarea class="comments-area" style="min-height: 120px;" placeholder="Опишите наблюдаемые достижения и таланты ребёнка..."></textarea>
+                </div>
+                <div class="conclusion-card">
+                    <h4>Зоны развития</h4>
+                    <textarea class="comments-area" style="min-height: 120px;" placeholder="Обозначьте области, требующие внимания и поддержки..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">◆</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- ===== RECOMMENDATIONS (screen only) ===== -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <span class="section-number" style="font-size: 2rem;">✧</span>
+                <div>
+                    <h2 class="section-title">Рекомендации родителям</h2>
+                    <p class="section-subtitle">Практики для домашней среды</p>
+                </div>
+            </div>
+            <div class="conclusion-card" style="max-width: 700px;">
+                <ul class="recommendations-list">
+                    <li>
+                        <input type="checkbox" class="checkbox-custom" id="rec1">
+                        <label for="rec1" class="recommendation-text">Повторять песни дома — закреплять знакомые мелодии и движения в привычной обстановке</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="checkbox-custom" id="rec2">
+                        <label for="rec2" class="recommendation-text">Использовать жесты и звукоподражания в повседневном общении</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="checkbox-custom" id="rec3">
+                        <label for="rec3" class="recommendation-text">Развивать ритм через хлопки и топанье во время игры и прогулки</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="checkbox-custom" id="rec4">
+                        <label for="rec4" class="recommendation-text">Включать музыкальные ритуалы: пробуждение, купание, засыпание</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="checkbox-custom" id="rec5">
+                        <label for="rec5" class="recommendation-text">Поддерживать подражание в игре — быть примером для ребёнка</label>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- PRINT FOOTER (visible only when printing) -->
+        <div class="print-footer print-only">
+            Логоритмика: ритм, речь, движение — Ирина Сергеевна Кичигина | Диагностический опросник для детей 1,5–3 лет
+        </div>
+
+        <!-- Footer (screen only) -->
+        <div style="text-align: center; margin-top: 60px; padding: 30px; color: var(--stone); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; border-top: 1px solid var(--accent-warm);">
+            Логоритмика: ритм, речь, движение — Ирина Сергеевна Кичигина<br>
+            <span style="font-size: 0.85rem; opacity: 0.7;">Диагностическое издание для детей 1,5–3 лет</span>
+        </div>
+    </main>
+
+    <!-- PRINT BAR -->
+    <div class="print-bar">
+        <button class="btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Наверх</button>
+        <button class="btn btn-primary" onclick="window.print()">Распечатать опросник</button>
+        <button class="btn" onclick="resetForm()">Сбросить</button>
+    </div>
+
+    <script>
+        const sections = [
+            { id: 1, name: 'Эмоционально-коммуникативная сфера', skills: ['contact', 'greeting', 'attention', 'interest'], max: 8 },
+            { id: 2, name: 'Подражание', skills: ['mimic_move', 'mimic_gesture', 'mimic_sound', 'mimic_peer'], max: 8 },
+            { id: 3, name: 'Слуховое внимание', skills: ['hear_music', 'recognize_song', 'stop_signal', 'loud_quiet'], max: 8 },
+            { id: 4, name: 'Чувство ритма', skills: ['clap_rhythm', 'stomp_rhythm', 'instrument_signal', 'anticipate_rhythm'], max: 8 },
+            { id: 5, name: 'Двигательная сфера', skills: ['coordination', 'follow_instruction', 'switch_movement', 'use_objects'], max: 8 },
+            { id: 6, name: 'Речевые предпосылки', skills: ['react_speech', 'simple_instruction', 'sound_mimicry', 'words_in_songs', 'speech_initiative'], max: 10 },
+            { id: 7, name: 'Предсказуемость', skills: ['know_rituals', 'expect_actions', 'initiate_game', 'transition'], max: 8 }
+        ];
+
+        function initCharts() {
+            const grid = document.getElementById('chartsGrid');
+            grid.innerHTML = '';
+            sections.forEach(section => {
+                const card = document.createElement('div');
+                card.className = 'chart-card';
+                card.innerHTML = `
+                    <div class="radial-chart">
+                        <svg width="140" height="140" viewBox="0 0 140 140">
+                            <circle class="radial-chart-bg" cx="70" cy="70" r="60"/>
+                            <circle class="radial-chart-fill" id="chart-fill-${section.id}" cx="70" cy="70" r="60"
+                                stroke-dasharray="377" stroke-dashoffset="377"/>
+                        </svg>
+                        <div class="radial-chart-text" id="chart-text-${section.id}">0%</div>
+                    </div>
+                    <div class="chart-label">${section.name}</div>
+                    <div class="chart-score" id="chart-score-${section.id}">0 / ${section.max}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updateScores() {
+            let totalScore = 0;
+            let totalMax = 0;
+            sections.forEach(section => {
+                let sectionScore = 0;
+                section.skills.forEach(skill => {
+                    const radios = document.getElementsByName(skill);
+                    for (let radio of radios) {
+                        if (radio.checked) { sectionScore += parseInt(radio.value); break; }
+                    }
+                });
+                totalScore += sectionScore;
+                totalMax += section.max;
+                const scoreEl = document.getElementById(`score-${section.id}`);
+                const progressEl = document.getElementById(`progress-${section.id}`);
+                if (scoreEl) scoreEl.textContent = `${sectionScore} / ${section.max}`;
+                if (progressEl) progressEl.style.width = `${(sectionScore / section.max) * 100}%`;
+                const percentage = Math.round((sectionScore / section.max) * 100);
+                const fillEl = document.getElementById(`chart-fill-${section.id}`);
+                const textEl = document.getElementById(`chart-text-${section.id}`);
+                const scoreTextEl = document.getElementById(`chart-score-${section.id}`);
+                if (fillEl) {
+                    const circumference = 2 * Math.PI * 60;
+                    fillEl.style.strokeDashoffset = circumference - (percentage / 100) * circumference;
+                }
+                if (textEl) textEl.textContent = `${percentage}%`;
+                if (scoreTextEl) scoreTextEl.textContent = `${sectionScore} / ${section.max}`;
+            });
+            const totalEl = document.getElementById('totalScore');
+            const interpEl = document.getElementById('totalInterpretation');
+            if (totalEl) totalEl.textContent = totalScore;
+            if (interpEl) {
+                if (totalScore === 0) {
+                    interpEl.textContent = 'Заполните диагностические таблицы выше, чтобы получить интерпретацию результатов.';
+                } else if (totalScore <= 18) {
+                    interpEl.textContent = 'Требуется выраженная поддержка в развитии предпосылок речи, внимания и подражания. Рекомендуется индивидуальный подход и частое повторение материала.';
+                } else if (totalScore <= 37) {
+                    interpEl.textContent = 'Навыки формируются, нужна системная логоритмическая практика. Ребёнок демонстрирует нестабильные, но явные достижения.';
+                } else {
+                    interpEl.textContent = 'Хорошая динамика развития речевых и моторных предпосылок. Ребёнок уверенно усваивает материал и готов к усложнению.';
+                }
+            }
+        }
+
+        function resetForm() {
+            if (confirm('Сбросить все ответы?')) {
+                document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+                document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+                document.querySelectorAll('.comments-area').forEach(t => t.value = '');
+                document.querySelectorAll('input[type="text"]').forEach(i => { if (i.id !== 'pedagog') i.value = ''; });
+                updateScores();
+            }
+        }
+
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            initScrollAnimations();
+            updateScores();
+        });
+    </script>
+
+</body>
+</html>
